@@ -16,7 +16,7 @@ static const char* ScenesLabels[] =
     "SunTemple",
     "BoxTest",
     "WhiteFurnace",
-    "Cubes",
+    //"Cubes",
 };
 
 static const char* ClusterRasterizationModesLabels[] =
@@ -26,7 +26,7 @@ static const char* ClusterRasterizationModesLabels[] =
     "MSAA8x",
     "Conservative",
 };
-static const int sceneSize = 5;
+static const int sceneSize = 4;
 namespace AppSettings
 {
     static SettingsContainer Settings;
