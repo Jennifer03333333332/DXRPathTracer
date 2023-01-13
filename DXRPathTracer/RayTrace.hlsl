@@ -482,6 +482,7 @@ void ClosestHitShader(inout PrimaryPayload payload, in HitAttributes attr)
     payload.Radiance = PathTrace(hitSurface, material, payload);
 }
 
+
 [shader("anyhit")]
 void AnyHitShader(inout PrimaryPayload payload, in HitAttributes attr)
 {

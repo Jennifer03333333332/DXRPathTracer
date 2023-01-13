@@ -101,7 +101,30 @@ void Initialize(D3D_FEATURE_LEVEL minFeatureLevel, uint32 adapterIdx)
                         L"Make sure that your OS and driver support DirectX 12");
 
     LARGE_INTEGER umdVersion = { };
-    Factory->EnumAdapters1(adapterIdx, &Adapter);
+    //start
+    //    
+    IDXGIAdapter1* tmpAdapter;
+    SIZE_T maxDedicatedVideoMemory = 0;
+    for (UINT i = 0; Factory->EnumAdapters1(i, &tmpAdapter) != DXGI_ERROR_NOT_FOUND; ++i)
+    {
+        DXGI_ADAPTER_DESC1 dxgiAdapterDesc1;
+        tmpAdapter->GetDesc1(&dxgiAdapterDesc1);
+
+        // Check to see if the adapter can create a D3D12 device without actually 
+        // creating it. The adapter with the largest dedicated video memory
+        // is favored.
+        if ((dxgiAdapterDesc1.Flags & DXGI_ADAPTER_FLAG_SOFTWARE) == 0 &&
+            SUCCEEDED(D3D12CreateDevice(tmpAdapter,
+                D3D_FEATURE_LEVEL_11_0, __uuidof(ID3D12Device), nullptr)) &&
+            dxgiAdapterDesc1.DedicatedVideoMemory > maxDedicatedVideoMemory)
+        {
+            maxDedicatedVideoMemory = dxgiAdapterDesc1.DedicatedVideoMemory;
+            Adapter = tmpAdapter;
+
+        }
+    }
+    //ends
+    //Factory->EnumAdapters1(adapterIdx, &Adapter);
 
     if(Adapter == nullptr)
         throw Exception(L"Unable to locate a DXGI 1.4 adapter that supports a D3D12 device.\n"
