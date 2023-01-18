@@ -16,7 +16,6 @@ static const char* ScenesLabels[] =
     "SunTemple",
     "BoxTest",
     "WhiteFurnace",
-    //"Cubes",
 };
 
 static const char* ClusterRasterizationModesLabels[] =
@@ -26,7 +25,7 @@ static const char* ClusterRasterizationModesLabels[] =
     "MSAA8x",
     "Conservative",
 };
-static const int sceneSize = 4;
+
 namespace AppSettings
 {
     static SettingsContainer Settings;
@@ -115,7 +114,7 @@ namespace AppSettings
         MSAAMode.Initialize("MSAAMode", "Anti Aliasing", "MSAA Mode", "MSAA mode to use for rendering", MSAAModes::MSAA4x, 3, MSAAModesLabels);
         Settings.AddSetting(&MSAAMode);
 
-        CurrentScene.Initialize("CurrentScene", "Scene", "Current Scene", "", Scenes::BoxTest, sceneSize, ScenesLabels);
+        CurrentScene.Initialize("CurrentScene", "Scene", "Current Scene", "", Scenes::BoxTest, 4, ScenesLabels);
         Settings.AddSetting(&CurrentScene);
 
         RenderLights.Initialize("RenderLights", "Scene", "Render Lights", "Enable or disable spot light rendering", true);

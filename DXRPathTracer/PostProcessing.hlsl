@@ -125,3 +125,5 @@ float4 ToneMap(in PSInput input) : SV_Target0
 
     return float4(color, 1.0f);
 }
+
+
