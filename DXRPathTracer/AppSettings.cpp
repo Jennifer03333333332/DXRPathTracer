@@ -114,7 +114,7 @@ namespace AppSettings
         MSAAMode.Initialize("MSAAMode", "Anti Aliasing", "MSAA Mode", "MSAA mode to use for rendering", MSAAModes::MSAA4x, 3, MSAAModesLabels);
         Settings.AddSetting(&MSAAMode);
 
-        CurrentScene.Initialize("CurrentScene", "Scene", "Current Scene", "", Scenes::BoxTest, 4, ScenesLabels);
+        CurrentScene.Initialize("CurrentScene", "Scene", "Current Scene", "", Scenes::SunTemple, 4, ScenesLabels);//Scenes::BoxTest
         Settings.AddSetting(&CurrentScene);
 
         RenderLights.Initialize("RenderLights", "Scene", "Render Lights", "Enable or disable spot light rendering", true);

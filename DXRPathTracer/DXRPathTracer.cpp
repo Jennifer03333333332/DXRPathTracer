@@ -36,7 +36,7 @@ using namespace SampleFramework12;
 static const wchar* ScenePaths[] =
 {
     L"..\\Content\\Models\\Sponza\\Sponza.fbx",
-    L"..\\Content\\Models\\SunTemple\\SunTemple.fbx",
+    L"..\\Content\\Models\\SunTemple1\\SunTemple.fbx",//1
     nullptr,
     L"..\\Content\\Models\\WhiteFurnace\\WhiteFurnace.fbx",
 };
@@ -1483,6 +1483,7 @@ void DXRPathTracer::BuildRTAccelerationStructure()
 
     D3D12_RAYTRACING_ACCELERATION_STRUCTURE_PREBUILD_INFO topLevelPrebuildInfo = {};
 
+    //top level
     {
         D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_INPUTS prebuildInfoDesc = {};
         prebuildInfoDesc.DescsLayout = D3D12_ELEMENTS_LAYOUT_ARRAY;
@@ -1496,7 +1497,7 @@ void DXRPathTracer::BuildRTAccelerationStructure()
     Assert_(topLevelPrebuildInfo.ResultDataMaxSizeInBytes > 0);
 
     D3D12_RAYTRACING_ACCELERATION_STRUCTURE_PREBUILD_INFO bottomLevelPrebuildInfo = {};
-
+    //bottom level
     {
         D3D12_BUILD_RAYTRACING_ACCELERATION_STRUCTURE_INPUTS prebuildInfoDesc = {};
         prebuildInfoDesc.DescsLayout = D3D12_ELEMENTS_LAYOUT_ARRAY;
@@ -1511,7 +1512,7 @@ void DXRPathTracer::BuildRTAccelerationStructure()
     Assert_(bottomLevelPrebuildInfo.ResultDataMaxSizeInBytes > 0);
 
     RawBuffer scratchBuffer;
-
+    //RT Scratch Buffer
     {
         RawBufferInit bufferInit;
         bufferInit.NumElements = Max(topLevelPrebuildInfo.ScratchDataSizeInBytes, bottomLevelPrebuildInfo.ScratchDataSizeInBytes) / RawBuffer::Stride;
@@ -1520,7 +1521,7 @@ void DXRPathTracer::BuildRTAccelerationStructure()
         bufferInit.Name = L"RT Scratch Buffer";
         scratchBuffer.Initialize(bufferInit);
     }
-
+    //BLAS
     {
         RawBufferInit bufferInit;
         bufferInit.NumElements = bottomLevelPrebuildInfo.ResultDataMaxSizeInBytes / RawBuffer::Stride;
@@ -1529,7 +1530,7 @@ void DXRPathTracer::BuildRTAccelerationStructure()
         bufferInit.Name = L"RT Bottom Level Accel Structure";
         rtBottomLevelAccelStructure.Initialize(bufferInit);
     }
-
+    //TLAS
     {
         RawBufferInit bufferInit;
         bufferInit.NumElements = topLevelPrebuildInfo.ResultDataMaxSizeInBytes / RawBuffer::Stride;
